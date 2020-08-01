@@ -67,20 +67,20 @@ public class Maze {
         int toy = (int) to.y;
         // to the right
         if (dir.x == -1) {
-            this.cells[fromx][fromy].isRight = false;
-            this.cells[tox][toy].isLeft = false;
+            this.cells[fromx][fromy].right.visible = false;
+            this.cells[tox][toy].left.visible = false;
         // to the left    
         } else if (dir.x == 1) {
-            this.cells[fromx][fromy].isLeft = false;
-            this.cells[tox][toy].isRight = false;
+            this.cells[fromx][fromy].left.visible = false;
+            this.cells[tox][toy].right.visible = false;
         // to the buttom
         } else if (dir.y == -1) {
-            this.cells[fromx][fromy].isButtom = false;
-            this.cells[tox][toy].isTop = false;
+            this.cells[fromx][fromy].buttom.visible = false;
+            this.cells[tox][toy].top.visible = false;
         // to the top
         } else if (dir.y == 1) {
-            this.cells[fromx][fromy].isTop = false;
-            this.cells[tox][toy].isButtom = false;
+            this.cells[fromx][fromy].top.visible = false;
+            this.cells[tox][toy].buttom.visible = false;
         }
     }
 }
