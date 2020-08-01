@@ -28,8 +28,42 @@ public class Maze_DFS extends Maze {
 //Maze generated with the Randomized Kruskal's algorithm
 public class Maze_Kruskal extends Maze {
 
+    ArrayList<Cell> walls;
+
     public Maze_Kruskal (int rows, int cols) {
         super(rows, cols);
+        this.walls = new ArrayList<Cell>();
+    }
+
+    void generate() {
+        this.current = this.cells[(int) random(cols)][(int) random(rows)];
+        for (Cell cell : this.getNext()) {
+            this.walls.add(cell);
+        }
+        while (this.walls.size() > 0) {
+            
+        }
+    }
+
+    Cell[] getNext() {
+        ArrayList<Cell> neighbours = new ArrayList<Cell>();
+        int x = (int) this.current.gridPos.x;
+        int y = (int) this.current.gridPos.y;
+        //top
+        if (y - 1 >= 0 && !this.cells[x][y-1].visited) {
+            neighbours.add(this.cells[x][y-1]);
+        } //right
+        if (x + 1 < cols && !this.cells[x+1][y].visited) {
+            neighbours.add(this.cells[x+1][y]);
+        } //left
+        if (x - 1 >= 0 && !this.cells[x-1][y].visited) {
+            neighbours.add(this.cells[x-1][y]);
+        } //buttom
+        if (y + 1 < rows && !this.cells[x][y+1].visited) {
+            neighbours.add(this.cells[x][y+1]);
+        }
+        return neighbours;
+
     }
 
 }
