@@ -3,12 +3,12 @@ import java.util.Stack;
 Cell current, next;
 int rows, cols;
 int w;
-Maze_AB maze;
-boolean running = true;
+Maze maze;
+boolean running = false;
 
 void setup() {
-    // fullScreen();
-    size(400, 400);
+    fullScreen();
+    // size(400, 400);
     background(50);
     
     w = 20;
@@ -23,7 +23,7 @@ void setup() {
 void draw() {
     if (running) {
         translate(w/2, w/2);
-        for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < 5; ++i) {
             if (maze.history.size() > 1) {
                 current = maze.history.get(0);
                 next = maze.history.get(1);

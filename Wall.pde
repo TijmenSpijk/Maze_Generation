@@ -1,11 +1,12 @@
 public class Wall {
 
-    PVector gridPos;
+    PVector gridPos, dir;
     PVector a, b;
     boolean visible;
 
-    public Wall (PVector gridPos, PVector a, PVector b) {
+    public Wall (PVector gridPos, PVector a, PVector b, PVector dir) {
         this.gridPos = gridPos;
+        this.dir = dir;
         this.a = a;
         this.b = b;
         this.visible = true;

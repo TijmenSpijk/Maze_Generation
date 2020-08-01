@@ -13,14 +13,14 @@ public class Cell {
         PVector	c = new PVector(x*w,(y+1)*w);
         PVector	d = new PVector((x+1)*w,(y+1)*w);
 
-        this.top = new Wall(this.gridPos, a, b);
-        this.right = new Wall(this.gridPos, b, d);
-        this.left = new Wall(this.gridPos, a, c);
-        this.buttom = new Wall(this.gridPos, c, d);
+        this.top = new Wall(this.gridPos, a, b, new PVector(0, -1));
+        this.right = new Wall(this.gridPos, b, d, new PVector(1, 0));
+        this.left = new Wall(this.gridPos, a, c, new PVector(-1, 0));
+        this.buttom = new Wall(this.gridPos, c, d, new PVector(0, 1));
 
         float r = map(x, 0, cols, 10, 200);
         float g = map(y, 0, rows, 10, 200);
-        this.f = color(150); //color(r, g, 50);
+        this.f = color(r, g, 50);
     }
 
     void show() {
