@@ -1,4 +1,4 @@
-import java.util.Stack;
+import java.util.*;
 
 Cell current, next;
 int rows, cols;
@@ -16,7 +16,7 @@ void setup() {
     cols = width/w - 1;
     
     // translate(w/2, w/2);
-    maze = new Maze_AB(rows, cols);
+    maze = new Maze_Kruskal(rows, cols);
     maze.generate();
 }
 

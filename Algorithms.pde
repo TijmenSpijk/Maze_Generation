@@ -25,6 +25,70 @@ public class Maze_DFS extends Maze {
 
 }
 
+//Maze generated with the Randomized Kruskal's algorithm
+public class Maze_Kruskal extends Maze {
+
+    ArrayList<Wall> walls;
+    ArrayList<Set> sets;
+
+    public Maze_Kruskal (int rows, int cols) {
+        super(rows, cols);
+        this.walls = new ArrayList<Wall>();
+        this.sets = new ArrayList<Set>();
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                Set<Cell> c = new HashSet<Cell>();
+                c.add(this.cells[i][j]);
+                this.sets.add(c);
+                this.walls.add(this.cells[i][j].top);
+                this.walls.add(this.cells[i][j].right);
+                this.walls.add(this.cells[i][j].left);
+                this.walls.add(this.cells[i][j].buttom);
+            }
+        }
+        Collections.shuffle(this.walls);
+    }
+
+    void generate() {
+        for (Wall wall : this.walls) {
+            this.current = this.cells[(int) wall.gridPos.x][(int) wall.gridPos.y];
+            this.current.visited = true;
+            Cell next = this.getNext(wall);
+            if (next != null) {
+                Set<Cell> currentSet = this.getSet(this.current, this.sets);
+                Set<Cell> nextSet = this.getSet(next, this.sets);
+                int indexNext = this.sets.indexOf(nextSet);
+                if (currentSet.addAll(nextSet)) {
+                    this.removeWalls(this.current.gridPos, next.gridPos);
+                    this.sets.remove(indexNext);
+                    this.history.add(this.current);
+                    this.history.add(next);
+                }
+            }
+        }
+    }
+
+    Cell getNext(Wall divider) {
+        int x = (int) (divider.gridPos.x + divider.dir.x);
+        int y = (int) (divider.gridPos.y + divider.dir.y);
+        if (x >= 0 && x < cols && y >= 0 && y < rows) {
+            return this.cells[x][y];
+        } else {
+            return null;
+        }
+    }
+
+    Set<Cell> getSet(Cell cell, ArrayList<Set> sets) {
+        for (Set set : sets) {
+            if (set.contains(cell)) {
+                return set;
+            }
+        }
+        return null;
+    }
+
+}
+
 //Maze generated with the Randomized Prim's algorithm
 public class Maze_Prim extends Maze {
 
@@ -75,16 +139,6 @@ public class Maze_Prim extends Maze {
             return null;
         }
     }
-
-}
-
-//Maze generated with the Randomized Kruskal's algorithm
-public class Maze_Kruskal extends Maze {
-
-    public Maze_Kruskal (int rows, int cols) {
-        super(rows, cols);
-    }
-
 }
 
 //Maze generated with Wilson's algorithm
