@@ -148,6 +148,88 @@ public class Maze_Wilson extends Maze {
         super(rows, cols);
     }
 
+    void generate() {
+        // step 1: chose arbitrary cell to be part of the maze
+        // step 2: chose arbitrary starting cell to start the walk form
+        // step 3: perform random walks all cells have been visited
+        // step 4: perform random walk until you reach another part of the maze
+        // step 5: at every step check if a loop has been created (reached own path)
+        // step 6: check if you reached another part of the maze
+        Cell next = new Cell(0, 0);
+        int countVisited = 0;
+        int total = rows*cols;
+        ArrayList<Cell> path = new ArrayList<Cell>();
+        //step 1;
+        this.current = this.cells[(int) random(cols)][(int) random(rows)];
+        this.current.visited = true;
+        countVisited++;
+        //step 2:
+        this.current = this.cells[(int) random(cols)][(int) random(rows)];
+        while (this.current.visited) {
+            this.current = this.cells[(int) random(cols)][(int) random(rows)];
+        }
+        this.current.visited = true;
+        countVisited++;
+        path.add(this.current);
+        //step 3:
+        while (countVisited < total) {
+            //step 4:
+            boolean foundMaze = false;
+            while(!foundMaze) {
+                next = this.getNext();
+                //step 5
+                if (path.contains(next)) {
+                    this.current = next;
+                } // step 6
+                else if (next.visited) {
+                    this.removeWalls(this.current.gridPos, next.gridPos);
+                    this.history.add(this.current);
+                    this.history.add(next);
+                    foundMaze = true;
+                } else {
+                    this.removeWalls(this.current.gridPos, next.gridPos);
+                    this.history.add(this.current);
+                    this.history.add(next);
+                    this.current = next;
+                    this.current.visited = true;
+                    countVisited++;
+                    path.add(this.current);
+                }
+            }
+            //step 2
+            path = new ArrayList<Cell>();
+            this.current = this.cells[(int) random(cols)][(int) random(rows)];
+            while (this.current.visited) {
+                this.current = this.cells[(int) random(cols)][(int) random(rows)];
+            }
+            this.current.visited = true;
+            countVisited++;
+            path.add(this.current);
+        }
+        this.history.add(this.current);
+        this.history.add(next);
+    }
+
+    Cell getNext() {
+        ArrayList<Cell> neighbours = new ArrayList<Cell>();
+        int x = (int) this.current.gridPos.x;
+        int y = (int) this.current.gridPos.y;
+        //top
+        if (y - 1 >= 0) {
+            neighbours.add(this.cells[x][y-1]);
+        } //right
+        if (x + 1 < cols) {
+            neighbours.add(this.cells[x+1][y]);
+        } //left
+        if (x - 1 >= 0) {
+            neighbours.add(this.cells[x-1][y]);
+        } //buttom
+        if (y + 1 < rows) {
+            neighbours.add(this.cells[x][y+1]);
+        }
+        return (neighbours.get((int) random(neighbours.size())));
+    }
+
 }
 
 //Maze generated with the Recursive division algorithm

@@ -10,13 +10,12 @@ void setup() {
     fullScreen();
     // size(400, 400);
     background(50);
-    
     w = 20;
     rows = height/w - 1;
     cols = width/w - 1;
     
     // translate(w/2, w/2);
-    maze = new Maze_Kruskal(rows, cols);
+    maze = new Maze_Wilson(rows, cols);
     maze.generate();
 }
 
